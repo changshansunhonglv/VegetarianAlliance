@@ -1,0 +1,43 @@
+{
+  "pages": [
+    "pages/release/release",
+    "pages/home/home",
+    "pages/index/index",
+    "pages/personal/personal"
+  ],
+  "window": {
+    "backgroundColor": "#ffffff",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "以素会友",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "广场",
+        "iconPath": "images/img/square.png",
+        "selectedIconPath": "images/img/square2.png"
+      },
+      {
+        "pagePath": "pages/release/release",
+        "text": "发布",
+        "iconPath": "images/img/release.png",
+        "selectedIconPath": "images/img/release2.png"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "text": "我的",
+        "iconPath": "images/img/my.png",
+        "selectedIconPath": "images/img/my2.png"
+      }
+    ],
+    "selectedColor": "#DD3F2C"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  }
+}

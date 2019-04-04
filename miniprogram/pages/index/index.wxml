@@ -1,0 +1,12 @@
+
+
+  <view class='logo' animation="{{animationData}}">
+    <image src='../../images/shucai.png'></image>
+  </view>
+  <view class='nva'>
+    <text>闻多素心人，乐与数晨夕。</text>
+    <button class='go' bindtap='go'>进入</button>
+  </view>
+  <view class='logo '>
+    <image src='../../images/shucai2.png'></image>
+  </view>

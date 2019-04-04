@@ -1,0 +1,26 @@
+<view class='feedback'>
+  <view class='title'>无法打开小程序</view>
+  <view class='form'>
+    <form bindsubmit="submitForm">
+      <view class="section">
+        <textarea placeholder="请填写10个字以上的问题描述以便我们提供更好的帮助" auto-focus maxlength="200" value='{{userInput}}' bindinput='bindWordLimit'  name="textarea" />
+        <view class='font-num'>
+          <text>{{userInput.length}}</text>/200</view>
+      </view>
+      <view class='screenshot'>
+        <text>相关截图（选填）</text>
+        <view class='img-num'>
+          <text>{{images.length}}</text>/4</view>
+        <view class='upload'>
+          <image src='../../../../img/shangchuan.svg' catchtap='chooseImage' wx:if="{{images.length>=0&&images.length<4}}"></image>
+          <block wx:for="{{images}}" wx:key>
+            <image src="{{item}}" mode="aspectFill" data-index="{{index}}" bindtap="preview" bindlongpress='deleteImg'></image>
+          </block>
+        </view>
+      </view>
+      <view>
+        <button formType="submit" class="btn-submit" type='primary'>提交</button>
+      </view>
+    </form>
+  </view>
+</view>

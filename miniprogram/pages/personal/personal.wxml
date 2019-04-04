@@ -1,0 +1,59 @@
+
+<view class='box'>
+  <view class="userinfo" >
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="login" plain> 登 录 </button>
+    <block wx:else>
+      <view animation="{{animationData}}" class='user'>
+        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" animation="{{animationData2}}"></image>
+        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      </view>
+    </block>
+  </view>
+</view>
+<view class='context'>
+  <view class='information ' animation="{{slide_up0}}">
+    <view class='information-div bdr' style='fontsize:18px;' catchtap='showOrder' id='0'>
+      <view>
+        <image src='../../images/img/collection.png'></image>
+      </view>
+      <view>收藏</view>
+    </view>
+    <view class='information-div' catchtap='showOrder' id='1'>
+      <view>
+        <image src='../../images/img/comment.png'></image>
+      </view>
+      <view>评论</view>
+    </view>
+    <view class='information-div' catchtap='showOrder' id='6'>
+      <view>
+        <image src='../../images/img/likes.png'></image>
+      </view>
+      <view>点赞</view>
+    </view>
+  </view>
+  <view class='information2' animation="{{slide_up1}}">
+    <view class='information2-div' bindtap='goInformationPage'>
+      <view>
+        <text class='iconfont icon-ziliao'></text>
+        <text>常用联系人</text>
+      </view>
+      <text class='iconfont icon-iconfontjiantou5'></text>
+    </view>
+    <view class='information2-div' bindtap='goXiaoxiPage'>
+      <view>
+        <text class='iconfont icon-xiaoxitongzhitixinglingshenglingdang-xianxing'> </text>
+        <text>消息通知</text>
+      </view>
+      <text class='iconfont icon-iconfontjiantou5'></text>
+    </view>
+    <view class='information2-div' bindtap='goMeassagePage'>
+      <view>
+        <text class='iconfont icon-changjianwenti'> </text>
+        <text>常见问题</text>
+      </view>
+      <text class='iconfont icon-iconfontjiantou5'></text>
+    </view>
+  </view>
+
+</view>
+

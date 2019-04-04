@@ -1,0 +1,28 @@
+/* pages/personal/commonproblem/commonproblem.wxss */
+
+page {
+  background-color: #eee;
+}
+.tishi{
+  width: 92%;
+  margin:2% 4%;
+  font-size: 14px;
+  color: #666;
+}
+.problem {
+  background-color: #fff;
+  width: 92%;
+  margin:0 4%;
+  font-size: 16px;
+}
+
+.problem-item {
+  width: 94%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+  padding: 20rpx 0 ;
+  margin: 0 20rpx;
+}

@@ -1,0 +1,10 @@
+<!--pages/personal/message/messagedetails/messagedetails.wxml-->
+<import src="../../../../pages/template/template.wxml" />
+<template is="pageState" data="{{...pageState}}" />
+<view class='view-title'>
+  <text>消息详情</text>
+  <text>消息详情</text>
+</view>
+<view class='view-content'>
+  <text>内容对对对对对对多多多多多多多多多多多多多多多多对对对对多多多多对对对对多多多多对对对对多多多多对对对对多多多多对对对对多多多多对对对对多多多多对对对对多多多多对对对对多多多多对对对对多多多多多多多多多多多多多多多多多多多多多多多多多多多多多</text>
+</view>

@@ -1,0 +1,68 @@
+/* pages/personal/commonproblem/feedback/feedback.wxss */
+
+.feedback {
+  width: 96%;
+  margin: 0 2%;
+}
+
+.title {
+  font-size: 16px;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.form {
+  font-size: 14px;
+}
+
+.section {
+  padding-top: 20rpx;
+  width: 100%;
+  height: 200rpx;
+  border-bottom: 1rpx solid #eee;
+  position: relative;
+}
+
+.section textarea {
+  width: 100%;
+  height: 100%;
+}
+
+.font-num {
+  color: #bbb;
+  position: absolute;
+  right: 20rpx;
+  bottom: 0;
+}
+
+.screenshot {
+  width: 100%;
+  height: 200rpx;
+  position: relative;
+  padding-top: 20rpx;
+}
+
+.img-num {
+  position: absolute;
+  color: #bbb;
+  top: 20rpx;
+  right: 20rpx;
+}
+
+.upload {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.upload image {
+  width: 160rpx;
+  height: 160rpx;
+  margin-right: 20rpx;
+}
+
+
+.btn-submit{
+  margin-top: 20rpx;
+}

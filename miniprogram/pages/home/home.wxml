@@ -1,0 +1,44 @@
+<view class='main'>
+  <view class='list'>
+    <view class='item'>
+      <view class='item-title'>标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
+      <view class='item-content'>
+        <view class='item-content-column'>
+          <view>
+            <image src='../../images/bg.jpg'></image>
+            <text>首页</text>
+          </view>
+          <view>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+        </view>
+        <view class='item-content-img'>
+          <image src='../../images/bg.jpg'></image>
+        </view>
+      </view>
+      <view class='shop'>
+        <text>2赞同  1评论</text>
+        <view></view>
+      </view>
+    </view>
+    <view class='interval'></view>
+        <view class='item'>
+      <view class='item-title'>标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
+      <view class='item-content'>
+        <view class='item-content-column'>
+          <view>
+            <image src='../../images/bg.jpg'></image>
+            <text>首页</text>
+          </view>
+          <view>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
+        </view>
+        <view class='item-content-img'>
+          <image src='../../images/bg.jpg'></image>
+        </view>
+      </view>
+      <view class='shop'>
+        <text>2赞同  1评论</text>
+        <view></view>
+      </view>
+    </view>
+    
+  </view>
+</view>

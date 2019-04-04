@@ -1,0 +1,54 @@
+/* pages/personal/message/message.wxss */
+page{
+  background-color: #F1F1F1;
+}
+
+.messagebox{
+  width: 92%;
+  margin: 0 4%;
+  height: 100%;
+}
+.messageitem{
+  width: 100%;
+  height: 150rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #dAdAdA;
+
+}
+.imgbox{
+  width: 20%;
+  height: 100rpx;
+}
+.imgbox image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+
+}
+.textbox{
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+}
+.textbox view:first-child{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.textbox view:last-child{
+  width: 100%;
+  display: -webkit-box;
+  overflow: hidden;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  
+}

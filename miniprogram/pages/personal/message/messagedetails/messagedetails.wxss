@@ -1,0 +1,24 @@
+/* pages/personal/message/messagedetails/messagedetails.wxss */
+
+page {
+  width: 92%;
+  margin: 4%;
+  background-color: #f1f1f1;
+}
+
+.view-title {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.view-title>text:last-child {
+  font-size: 14px;
+  color: #ccc;  
+}
+
+.view-content {
+  font-size: 14px;
+  text-indent: 2em;
+  color: #666;
+}
