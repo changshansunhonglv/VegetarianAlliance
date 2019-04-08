@@ -1,14 +1,14 @@
 //app.js
+
+const regeneratorRuntime = require("libs/runtime.js")
+
+wx.cloud.init();
 App({
 
-  appUrl: "https://wxapp.lyysaas.com/book-web-applet/",
-  appToken: null,
   globalData: {
     userInfo: null,
-    fileID: null,
-    cloudPath: null,
-    imagePath: null
   },
+  regeneratorRuntime,
   onLaunch: function() {
     // 展示本地存储能力 
     if (!wx.cloud) {

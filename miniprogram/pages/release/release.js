@@ -1,4 +1,8 @@
 // pages/personal/commonproblem/feedback/feedback.js
+
+const app = getApp();
+const regeneratorRuntime = app.regeneratorRuntime;
+const util = require('../../utils/util.js')
 Page({
 
   /**
@@ -8,13 +12,20 @@ Page({
     userTitle: '', //标题
     userInput: '', //输入值
     images: [], //图片
+    addressObj: {
+      address: "",
+      errMsg: "",
+      latitude: null,
+      longitude: null,
+      name: "",
+    },
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    wx.cloud.init()
   },
 
   /**
@@ -94,6 +105,7 @@ Page({
         this.setData({
           images: this.data.images
         })
+
       }
     })
 
@@ -122,7 +134,8 @@ Page({
         console.log(res.tapIndex)
         if (res.tapIndex == 0) {
           let index = e.target.dataset.index
-          that.data.images.splice(index, 1)
+          that.data.
+          images.splice(index, 1)
           that.setData({
             images: that.data.images
           })
@@ -130,43 +143,57 @@ Page({
       }
     })
   },
-  submitForm(e) {
+  submitForm: async function(e) {
     console.log(e)
     var that = this;
-    //获得图片集合，图片名称
-    const filePath = that.data.images,
-      cloudPath = [];
+
+    var promisify = new Promise({
+
+    })
     filePath.forEach((item, i) => {
       cloudPath.push('shl' + '_' + i + filePath[i].match(/\.[^.]+?$/)[0])
     })
-    filePath.forEach((item, i) => {
-      wx.cloud.uploadFile({
+    await  filePath.forEach(async (item, i) => {
+     var res=  await wx.cloud.uploadFile({
         cloudPath: cloudPath[i],
         filePath: item, // 文件路径
-        success: res => {
-          // get resource ID
-          console.log(res.fileID)
-        },
-        fail: err => {
-          console.log(err)
-        }
-      })
-    })
-
-    const db = wx.cloud.database()
-    db.collection('forum').add({
-      data: {
-        content: e.detail.value.textarea,
-        pubdate: "2012-3-29",
-        img: cloudPath,
-        title: e.detail.value.userTitle
-      }
-    }).then((res) => {
+      })  
       console.log(res)
-      wx.showToast({
-        title: "添加成功"
-      })
+      imgFileId.push(res.fileID)
     })
+    console.log(imgFileId)
+//添加操作
+    // let pudate = new Date();
+    // const db =  wx.cloud.database()
+    //  db.collection('forum').add({
+    //   data: {
+    //     content: e.detail.value.textarea,
+    //     pubdate: util.formatTime(pudate),
+    //     img: imgFileId,
+    //     title: e.detail.value.userTitle,
+    //     address: that.data.addressObj
+    //   }
+    // }).then((res) => {
+    //   console.log(res)
+    //   wx.showToast({
+    //     title: "添加成功"
+    //   })
+    // })
   },
+  /**
+   * 获取地址
+   */
+  openMap: function() {
+    var that = this;
+    wx.chooseLocation({
+      success: function(res) {
+        console.log(res);
+
+        that.setData({
+          addressObj: res
+        })
+      },
+    })
+  }
 
 })

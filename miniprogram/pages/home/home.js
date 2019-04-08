@@ -12,12 +12,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.cloud.init();
     const db = wx.cloud.database()
     const forum = db.collection('forum')
     console.log(forum)
-    const todo = db.collection('forum').doc('XKRfY-SiwXKAQs82').get().then(res => {
-      console.log(res.data)
-    })
+    try{
+      // const todo = db.collection('forum').doc('').get().then(res => {
+      //   console.log(res.data)
+      // })
+    }
+    catch(e){
+
+    }
+   
   },
 
   /**

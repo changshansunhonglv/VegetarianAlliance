@@ -62,7 +62,29 @@
   margin-right: 20rpx;
 }
 
+.btn-submit {
+  margin-top: 40rpx;
+}
 
-.btn-submit{
-  margin-top: 20rpx;
+.mapButton {
+  width: 100%;
+  padding: 20rpx 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+}
+.mapButton input{
+  width:70%;
+
+}
+
+.btn1 {
+  font-size: 14px ;
+  color: rgb(109, 1, 1);
+  border: 1px solid rgb(219, 211, 211);
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  background-color: rgb(214, 252, 252)
 }

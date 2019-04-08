@@ -4,12 +4,15 @@
 
     <form bindsubmit="submitForm">
       <view class='title'>
-        <input placeholder="标题名称" value='{{userTitle}}' name='userTitle'></input>
+        <input placeholder="菜品名称 如：好吃的不行不行的夏姐板面~" value='{{userTitle}}' name='userTitle'></input>
       </view>
       <view class="section">
-        <textarea placeholder="请填写10个字以上的描述以便我们提供更好的帮助" auto-focus maxlength="200" value='{{userInput}}' bindinput='bindWordLimit' name="textarea" />
+        <textarea placeholder="请填写10个字以上的描述以便我们提供更好的帮助 如：一天不吃草，我浑身难受！" auto-focus maxlength="200" value='{{userInput}}' bindinput='bindWordLimit' name="textarea" />
         <view class='font-num'>
           <text>{{userInput.length}}</text>/200</view>
+      </view>
+      <view class='mapButton' >
+          <text>地理位置{{addressObj.address}}</text> <view catchtap='openMap' class='btn1'>一键定位</view> 
       </view>
       <view class='screenshot'>
         <text>相关图片（选填）</text>
@@ -23,8 +26,12 @@
         </view>
       </view>
       <view>
-        <button formType="submit" class="btn-submit" type='primary'>提交</button>
+        <button formType="submit" class="btn-submit" type='primary'>提 交</button>
       </view>
     </form>
   </view>
 </view>
+<!-- <view>
+    
+    <image src=''></image>
+</view> -->
