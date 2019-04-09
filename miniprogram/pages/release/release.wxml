@@ -1,5 +1,4 @@
 <view class='feedback'>
-
   <view class='form'>
 
     <form bindsubmit="submitForm">
@@ -31,7 +30,3 @@
     </form>
   </view>
 </view>
-<!-- <view>
-    
-    <image src=''></image>
-</view> -->

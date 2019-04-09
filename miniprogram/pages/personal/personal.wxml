@@ -1,7 +1,7 @@
 
 <view class='box'>
   <view class="userinfo" >
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="login" plain> 登 录 </button>
+    <button wx:if="{{!logged && canIUse}}"  open-type="getUserInfo" bindgetuserinfo="getUserInfo" class="login" plain> 登 录 </button>
     <block wx:else>
       <view animation="{{animationData}}" class='user'>
         <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill" animation="{{animationData2}}"></image>

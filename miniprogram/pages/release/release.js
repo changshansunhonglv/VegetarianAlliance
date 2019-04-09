@@ -12,6 +12,9 @@ Page({
     userTitle: '', //标题
     userInput: '', //输入值
     images: [], //图片
+    user:{
+
+    },
     addressObj: {
       address: "",
       errMsg: "",
@@ -34,7 +37,6 @@ Page({
   onReady: function() {
 
   },
-
   bindWordLimit: function(e) {
     var that = this;
     that.setData({
@@ -43,55 +45,94 @@ Page({
   },
   doUpload: function() { // 选择图片
     var that = this;
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function(res) {
-        wx.showLoading({
-          title: '上传中',
-        })
-        const filePath = res.tempFilePaths[0]
-        that.setData({
-          imgUrl: filePath
-        })
-        // 上传图片
-        const cloudPath = that.data.count + filePath.match(/\.[^.]+?$/)[0]
-        //改写: 数组 多图片 
-        // const filePath = res.tempFilePaths, cloudPath = [];
-        // filePath.forEach((item, i)=>{
-        // cloudPath.push(that.data.count + '_' + i + filePath[i].match(/\.[^.]+?$/)[0]) 
-        // }) 
-        console.log(cloudPath)
-        // filePath.forEach((item, i) => { 
+    const filePath = that.data.images
+    var cloudPath = [];
+    var promiseArry = [];
+    filePath.forEach((item, i) => {
+      cloudPath.push(util.formatTimestamp(new Date()) + '_' + i + filePath[i].match(/\.[^.]+?$/)[0])
+    })
+    filePath.forEach((item, i) => {
+      let wake = new Promise((resolve, reject) => {
         wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', cloudPath, res)
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
+          cloudPath: cloudPath[i],
+          filePath: item, // 文件路径
+          success: function(res) {
+            resolve(res);
           },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
+          fail: function(res) {
+            reject(res);
           }
         })
-        // }) 
-      },
-      fail: e => {
-        console.error(e)
-      }
+      })
+      promiseArry.push(wake);
     })
+    return promiseArry
   },
+  submitForm: function(e) {
+    var that = this;
+    wx.showLoading({
+      title: '上传中...',
+    })
+    var imgFileId = [];
+    Promise.all(that.doUpload()).then((res) => {
+      console.log(res)
+      res.forEach((item, i) => {
+        imgFileId.push(item.fileID)
+      })
+      let pudate = new Date();
+      const db = wx.cloud.database()
+      db.collection('forum').add({
+        data: {
+          content: e.detail.value.textarea,
+          pubdate: util.formatTime(pudate),
+          img: imgFileId,
+          userName:'',
+          userImg:'',
+          title: e.detail.value.userTitle,
+          address: that.data.addressObj
+        }
+      }).then(res => {
+        console.log(res)
+        setTimeout(function () {
+          wx.hideLoading()
+        }, 500)
+        wx.showModal({
+          title: '提示',
+          content: '发表成功',
+        })
+      })
+    }).catch((error) => {
+      wx.showModal({
+        title: '提示',
+        content: '发表成功',
+        success:(res)=>{
+          if (res.confirm) {
+            wx.switchTab({
+              url: '../../pages/home/home',
+            })
+          } else if (res.cancel) {
+            that.setData({
+              userTitle: '', //标题
+              userInput: '', //输入值
+              images: [], //图片
+              addressObj: {
+                address: "",
+                errMsg: "",
+                latitude: null,
+                longitude: null,
+                name: "",
+              }
+            })
+          
+          
+          }
+          
+        }
+      })
+    })
+    //添加操作
 
+  },
   chooseImage(e) {
     var that = this;
     wx.chooseImage({
@@ -143,43 +184,7 @@ Page({
       }
     })
   },
-  submitForm: async function(e) {
-    console.log(e)
-    var that = this;
 
-    var promisify = new Promise({
-
-    })
-    filePath.forEach((item, i) => {
-      cloudPath.push('shl' + '_' + i + filePath[i].match(/\.[^.]+?$/)[0])
-    })
-    await  filePath.forEach(async (item, i) => {
-     var res=  await wx.cloud.uploadFile({
-        cloudPath: cloudPath[i],
-        filePath: item, // 文件路径
-      })  
-      console.log(res)
-      imgFileId.push(res.fileID)
-    })
-    console.log(imgFileId)
-//添加操作
-    // let pudate = new Date();
-    // const db =  wx.cloud.database()
-    //  db.collection('forum').add({
-    //   data: {
-    //     content: e.detail.value.textarea,
-    //     pubdate: util.formatTime(pudate),
-    //     img: imgFileId,
-    //     title: e.detail.value.userTitle,
-    //     address: that.data.addressObj
-    //   }
-    // }).then((res) => {
-    //   console.log(res)
-    //   wx.showToast({
-    //     title: "添加成功"
-    //   })
-    // })
-  },
   /**
    * 获取地址
    */
@@ -188,11 +193,17 @@ Page({
     wx.chooseLocation({
       success: function(res) {
         console.log(res);
-
         that.setData({
           addressObj: res
         })
       },
+      fail:function(res){
+        wx.showModal({
+          title: '提示',
+          content: '未授权地理位置，请前往设置中授权。',
+          showCancel:false
+        })
+      }
     })
   }
 

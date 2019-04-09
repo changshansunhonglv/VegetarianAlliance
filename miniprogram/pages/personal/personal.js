@@ -8,10 +8,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    avatarUrl: './user-unlogin.png',
     userInfo: {},
+    logged: false,
+    takeSession: false,
+    requestResult: '',
     animationData: {},
     animationData2: {},
-    hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
 
@@ -22,76 +25,62 @@ Page({
     var that = this;
     const page = pageState(that);
     page.finish()
+    if (!wx.cloud) {
+      wx.redirectTo({
+        url: '../chooseLib/chooseLib',
+      })
+      return
+    }
+    // 获取用户信息
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          wx.getUserInfo({
+            success: res => {
+              this.setData({
+                avatarUrl: res.userInfo.avatarUrl,
+                userInfo: res.userInfo
+              })
+            }
+          })
+        }
+      }
+    })
   },
   getUserInfo: function(e) {
     var that = this;
     const page = pageState(that);
     page.finish()
-    console.log(e)
-    if (e.detail.userInfo) {
-      //用户按了允许授权按钮
-      console.log('/用户按了允许授权按钮')
+    if (!this.logged && e.detail.userInfo) {
       console.log(e.detail.userInfo)
-      wx.login({
-        success(res) {
-          if (res.code) {
-            // 发起网络请求
-            app.httpGet(`${app.appUrl}weixin/getOpenId/${res.code}`).then((res) => {
-              console.log('登录')
-              console.log(res)
-              //正常显示
-              if (false) {
-                page.empty()
-                return;
-              } else {
-                page.finish()
-                app.globalData.userInfo = e.detail.userInfo
-                app.appToken = res.data.resultData.token
-                wx.setStorageSync('userId', res.data.resultData.userId)
-                wx.setStorageSync('openId', res.data.resultData.openId)
-                that.setData({
-                  userInfo: e.detail.userInfo,
-                  hasUserInfo: true
-                })
-              }
-  //             var animation = wx.createAnimation({
-  //               //持续时间800ms 
-  //               duration: 100,
-  //               timingFunction: 'ease',
-  //             });
-  //             animation.opacity(0.1).scale(0.2).step()
-  //             animation.opacity(0.3).scale(0.4).step()
-  //             animation.opacity(0.5).scale(0.5).step()
-  //             animation.opacity(0.7).scale(0.7).step()
-  //             animation.opacity(0.9).scale(0.9).step()
-  //             animation.opacity(1).scale(1).step()
-  //             setTimeout(function() {
-  //               that.setData({
-  //                 animationData: animation.export()
-  //               })
-  //             }.bind(that), 500);
-
-            
-
-            }, (res) => {
-              console.log(res)
-              page.error();
-            })
-
-          } else {
-            console.log('登录失败！' + res.errMsg)
-          }
-        }
-      })
-    } else {
-      //用户按了拒绝按钮
-      console.log('//用户按了拒绝按钮')
-      wx.showModal({
-        title: '提示',
-        content: '未授权，无法体验预约功能',
-        showCancel: false
+      wx.setStorageSync('userInfo', e.detail.userInfo)
+      this.setData({
+        logged: true,
+        avatarUrl: e.detail.userInfo.avatarUrl,
+        userInfo: e.detail.userInfo
       })
     }
+  },
+  onGetOpenid: function () {
+    // 调用云函数
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        app.globalData.openid = res.result.openid
+        wx.navigateTo({
+          url: '../userConsole/userConsole',
+        })
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+        wx.navigateTo({
+          url: '../deployFunctions/deployFunctions',
+        })
+      }
+    })
   },
 
   /**

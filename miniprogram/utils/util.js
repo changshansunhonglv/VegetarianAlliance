@@ -14,11 +14,16 @@ const formatNumber = n => {
   return n[1] ? n : '0' + n
 }
 
-const formatTimestamp= (timesrc)=>{
+const formatTimestamp = date => {
 
-  let date = new Date(timesrc);
- 
-  return formatTime(date)
+  var year = date.getFullYear()
+  var month = date.getMonth() + 1
+  var day = date.getDate()
+  var hour = date.getHours()
+  var minute = date.getMinutes()
+  var second = date.getSeconds()
+
+  return [year, month, day].map(formatNumber).join('_') + '_' + [hour, minute, second].map(formatNumber).join('_')
 }
 module.exports = {
   formatTime: formatTime,

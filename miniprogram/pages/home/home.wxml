@@ -1,44 +1,27 @@
 <view class='main'>
   <view class='list'>
-    <view class='item'>
-      <view class='item-title'>标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
-      <view class='item-content'>
-        <view class='item-content-column'>
-          <view>
-            <image src='../../images/bg.jpg'></image>
-            <text>首页</text>
+    <block wx:for="{{resultData}}" wx:key>
+      <view class='item' id='{{item._id}}'>
+        <view class='item-title'>{{item.title}}</view>
+        <view class='item-content'>
+          <view class='item-content-column'>
+            <view>
+              <image src='{{item.img[0]}}' wx:if='{{item.img.length<0}}'></image>
+              <text>首页</text>
+            </view>
+            <view>{{item.content}}</view>
           </view>
-          <view>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
-        </view>
-        <view class='item-content-img'>
-          <image src='../../images/bg.jpg'></image>
-        </view>
-      </view>
-      <view class='shop'>
-        <text>2赞同  1评论</text>
-        <view></view>
-      </view>
-    </view>
-    <view class='interval'></view>
-        <view class='item'>
-      <view class='item-title'>标题标题标题标题标题标题标题标题标题标题标题标题标题标题标题</view>
-      <view class='item-content'>
-        <view class='item-content-column'>
-          <view>
-            <image src='../../images/bg.jpg'></image>
-            <text>首页</text>
+          <view class='item-content-img'>
+            <image src='{{item.img[0]}}' data-d='{{item.img[0]}}' wx:if='{{item.img.length>0}}'></image>
           </view>
-          <view>内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容</view>
         </view>
-        <view class='item-content-img'>
-          <image src='../../images/bg.jpg'></image>
+        <view class='shop'>
+          <text>2赞同  1评论</text>
+          <view></view>
         </view>
       </view>
-      <view class='shop'>
-        <text>2赞同  1评论</text>
-        <view></view>
-      </view>
-    </view>
-    
+      <view class='interval'></view>2
+
+      </block>
   </view>
 </view>
