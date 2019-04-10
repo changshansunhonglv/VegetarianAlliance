@@ -11,7 +11,7 @@
 	},
 	"appid": "wxcaba34ba41cbce2f",
 	"projectname": "%E8%83%8E%E9%87%8C%E7%B4%A0",
-	"libVersion": "2.2.5",
+	"libVersion": "2.6.5",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -29,12 +29,19 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 1,
 			"list": [
 				{
 					"id": -1,
 					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide"
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "555",
+					"pathName": "pages/home/language/language",
+					"scene": null
 				}
 			]
 		}

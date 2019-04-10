@@ -1,12 +1,15 @@
-// pages/home/home.js
+// pages/home/language/language.js
+const app = getApp();
+const regeneratorRuntime = app.regeneratorRuntime;
+const util = require('../../../utils/util.js')
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    totalCount: 0,
-    resultData:[],
+    comment:'',
+    resultData: {},
     pageSize:10,
   },
 
@@ -14,17 +17,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var that = this;
     const db = wx.cloud.database()
     const forum = db.collection('forum')
     console.log(forum)
     try {
-      // const todo = db.collection('forum').doc('').get().then(res => {
-      //   console.log(res.data)
-      // })
+      const todo = db.collection('forum').doc(options.id).get().then(res => {
+        console.log(res.data)
+        that.setData({
+          resultData: res.data
+        })
+      })
     } catch (e) {
 
     }
-
   },
 
   /**
@@ -38,7 +44,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.getData()
+
   },
 
   /**
@@ -59,8 +65,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
-    this.getData()
-    
+
   },
 
   /**
@@ -76,24 +81,60 @@ Page({
   onShareAppMessage: function() {
 
   },
+  //添加评论
+  submitForm: function(e) {
+    if (e.detail.value.comment == "") {
+      return
+    }
+    console.log(e)
+    var that = this;
+
+    const db = wx.cloud.database();
+    db.collection('comment').add({
+      data: {
+        forumId: that.data.resultData._id, //id
+        recipient: that.data.resultData._openid,
+        content: e.detail.value.comment,
+        pubdate: util.formatTime(new Date()),
+        senderName:'',
+        senderImg:''
+      }
+    }).then(res=>{
+      console.log(res);
+      wx.showToast({
+        title: '评论成功！',
+        mask:true,
+        success:res=>{
+        console.log(res)
+        that.setData({
+          comment:''
+        })
+        }
+      })
+    }).catch(res=>{
+
+      console.log(res)
+
+    })
+  },
   /** * 获取列表数据 * */
-  getData: function(page) {
+  getData: function (page) {
     var that = this;
     const db = wx.cloud.database();
     // 获取总数 
-    db.collection('forum').count({
-      success: function(res) {
+    db.collection('comment').count({
+      success: function (res) {
         that.data.totalCount = res.total;
       }
     }) // 获取前十条 
     try {
-      db.collection('forum').limit(that.data.pageSize) // 限制返回数量为 10 条 
+      db.collection('comment').limit(that.data.pageSize) // 限制返回数量为 10 条 
         .orderBy('pubdate', 'desc')
         .get({
-          success: function(res) {
+          success: function (res) {
             // res.data 是包含以上定义的两条记录的数组
             console.log(res)
-            that.data.resultData  = res.data;
+            that.data.resultData = res.data;
             that.setData({
               resultData: that.data.resultData,
             })
@@ -101,7 +142,7 @@ Page({
             //隐藏加载 
             wx.stopPullDownRefresh();
           },
-          fail: function(event) {
+          fail: function (event) {
             wx.hideNavigationBarLoading(); //隐藏加载 
             wx.stopPullDownRefresh();
           }
@@ -112,12 +153,4 @@ Page({
       console.error(e);
     }
   },
-  /**
-   * 跳转详情
-   */
-  goToLangage: function (e) {
-    wx.navigateTo({
-      url: '../../pages/home/language/language?id='+e.currentTarget.id,
-    })
-  }
 })

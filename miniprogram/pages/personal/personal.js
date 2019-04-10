@@ -90,13 +90,13 @@ Page({
 
   },
   onShow: function () {
-    let hasUserInfo = app.globalData.userInfo == null || app.appToken == null?false:true;
+    let logged = (wx.getStorageSync('userInfo') == null | wx.getStorageSync('userInfo')==''?false:true);
       this.setData({
-        userInfo:app.globalData.userInfo,
-        hasUserInfo
+        userInfo: wx.getStorageSync('userInfo'),
+        logged
     })
-    console.log(hasUserInfo)
-    console.log(app.globalData.userInfo)
+    console.log(wx.getStorageSync('userInfo'))
+    console.log(logged)
     setTimeout(function () {
       app.slideupshow(this, 'slide_up0', 0, 1)
     }.bind(this), 200);

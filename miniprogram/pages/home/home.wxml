@@ -1,26 +1,26 @@
 <view class='main'>
   <view class='list'>
     <block wx:for="{{resultData}}" wx:key>
-      <view class='item' id='{{item._id}}'>
+      <view class='item' id='{{item._id}}' catchtap='goToLangage'>
         <view class='item-title'>{{item.title}}</view>
         <view class='item-content'>
           <view class='item-content-column'>
             <view>
-              <image src='{{item.img[0]}}' wx:if='{{item.img.length<0}}'></image>
-              <text>首页</text>
+              <image src='{{item.avatarUrl}}' ></image>
+              <text>{{item.nickName}}</text>
             </view>
             <view>{{item.content}}</view>
           </view>
           <view class='item-content-img'>
-            <image src='{{item.img[0]}}' data-d='{{item.img[0]}}' wx:if='{{item.img.length>0}}'></image>
+            <image src='{{item.img[0]}}' wx:if='{{item.img.length>0}}'></image>
           </view>
         </view>
         <view class='shop'>
-          <text>2赞同  1评论</text>
-          <view></view>
+          <view wx:if="{{item.name}}"> {{item.name}}</view>
+          <text>{{item.pubdate}}</text>
         </view>
       </view>
-      <view class='interval'></view>2
+      <view class='interval'></view>
 
       </block>
   </view>

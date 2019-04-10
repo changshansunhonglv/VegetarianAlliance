@@ -1,14 +1,15 @@
 {
   "pages": [
-    "pages/release/release",
     "pages/home/home",
+    "pages/release/release",
+    "pages/home/language/language",
     "pages/index/index",
     "pages/personal/personal"
   ],
   "window": {
-    "backgroundColor": "#ffffff",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#F8D100",
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#F8D100",
     "navigationBarTitleText": "素食者联盟",
     "navigationBarTextStyle": "black"
   },

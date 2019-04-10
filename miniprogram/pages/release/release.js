@@ -12,9 +12,8 @@ Page({
     userTitle: '', //标题
     userInput: '', //输入值
     images: [], //图片
-    user:{
-
-    },
+    avatarUrl: "../../images/youke.png",
+    nickName: "游客",
     addressObj: {
       address: "",
       errMsg: "",
@@ -29,6 +28,7 @@ Page({
    */
   onLoad: function(options) {
     wx.cloud.init()
+
   },
 
   /**
@@ -73,62 +73,64 @@ Page({
     wx.showLoading({
       title: '上传中...',
     })
+    if (wx.getStorageSync('userInfo')) {
+      console.log(wx.getStorageSync('userInfo'))
+      that.setData({
+        avatarUrl: wx.getStorageSync('userInfo').avatarUrl,
+        nickName: wx.getStorageSync('userInfo').nickName
+      })
+    }
     var imgFileId = [];
     Promise.all(that.doUpload()).then((res) => {
       console.log(res)
       res.forEach((item, i) => {
         imgFileId.push(item.fileID)
       })
-      let pudate = new Date();
+      
       const db = wx.cloud.database()
       db.collection('forum').add({
         data: {
           content: e.detail.value.textarea,
-          pubdate: util.formatTime(pudate),
+          pubdate: util.formatTime(new Date()),
           img: imgFileId,
-          userName:'',
-          userImg:'',
+          nickName: that.data.nickName,
+          avatarUrl: that.data.avatarUrl,
           title: e.detail.value.userTitle,
-          address: that.data.addressObj
+          address: that.data.addressObj,
+
         }
       }).then(res => {
         console.log(res)
-        setTimeout(function () {
+        setTimeout(function() {
           wx.hideLoading()
         }, 500)
         wx.showModal({
           title: '提示',
           content: '发表成功',
+          success: (res) => {
+            if (res.confirm) {
+              wx.switchTab({
+                url: '../../pages/home/home',
+              })
+            } else if (res.cancel) {
+              that.setData({
+                userTitle: '', //标题
+                userInput: '', //输入值
+                images: [], //图片
+                addressObj: {
+                  address: "",
+                  errMsg: "",
+                  latitude: null,
+                  longitude: null,
+                  name: "",
+                }
+              })
+            }
+          }
         })
       })
     }).catch((error) => {
-      wx.showModal({
-        title: '提示',
-        content: '发表成功',
-        success:(res)=>{
-          if (res.confirm) {
-            wx.switchTab({
-              url: '../../pages/home/home',
-            })
-          } else if (res.cancel) {
-            that.setData({
-              userTitle: '', //标题
-              userInput: '', //输入值
-              images: [], //图片
-              addressObj: {
-                address: "",
-                errMsg: "",
-                latitude: null,
-                longitude: null,
-                name: "",
-              }
-            })
-          
-          
-          }
-          
-        }
-      })
+
     })
     //添加操作
 
@@ -197,11 +199,11 @@ Page({
           addressObj: res
         })
       },
-      fail:function(res){
+      fail: function(res) {
         wx.showModal({
           title: '提示',
           content: '未授权地理位置，请前往设置中授权。',
-          showCancel:false
+          showCancel: false
         })
       }
     })

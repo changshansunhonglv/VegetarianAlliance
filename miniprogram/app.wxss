@@ -1,47 +1,6 @@
 /**app.wxss**/
 
 
-counter, .mock .qa-cover {
-  font-size: 0.8em;
-  background-color: #eee !important;
-  color: #eee;
-  animation: loading 3s infinite ease;
-}
-
-.mock .qa-head {
-  color: #eee;
-}
-
-.mock .qa-cover {
-  background-image: none !important;
-  margin-top: 20rpx;
-}
-
-.mock swiper-item image {
-  display: none;
-}
-
-@keyframes loading {
-  0% {
-    opacity: 0.5;
-  }
-
-  50% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.5;
-  }
-}
-
-.icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
-  fill: currentColor;
-  overflow: hidden;
-}
 .position-f {
   position: fixed;
   left: 0;
